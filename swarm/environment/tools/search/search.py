@@ -7,20 +7,6 @@ import requests
 from ddgs import DDGS
 import ast
 
-class BingSearchEngine():
-    def __init__(self) -> None:
-        self.api_key = os.getenv("BING_API_KEY")
-        self.endpoint = "https://api.bing.microsoft.com/v7.0/search"
-        self.headers = {"Ocp-Apim-Subscription-Key": self.api_key}
-    
-    def search(self, query: str, num: int = 3):
-        try:
-            params = {"q": query, "count": num}
-            res = requests.get(self.endpoint, headers=self.headers, params=params)
-            res = res.json()
-            return '\n'.join([item['snippet'] for item in res['webPages']['value']])
-        except:
-            return 'Cannot get search results from Bing API'
 
 class GoogleSearchEngine():
     def __init__(self) -> None:
