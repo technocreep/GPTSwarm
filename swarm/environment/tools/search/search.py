@@ -47,7 +47,7 @@ class SearchAPIEngine():
 
 class DuckSearchEngine():
     def __init__(self) -> None:
-        self.ddgs = DDGS()
+        self.ddgs = DDGS(timeout=10)
     
     def search(self, query: str, num: int = 3):
         try:
