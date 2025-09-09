@@ -36,12 +36,12 @@ class WebSearch(Node):
     def _get_searcher(self):
         load_dotenv()
 
-        if os.getenv("SEARCHAPI_API_KEY"):
-            return SearchAPIEngine()
-        if os.getenv("GOOGLE_API_KEY"):
-            return GoogleSearchEngine()
-        else:
-            return DuckSearchEngine()
+        # if os.getenv("SEARCHAPI_API_KEY"):
+        #     return SearchAPIEngine()
+        # if os.getenv("GOOGLE_API_KEY"):
+        #     return GoogleSearchEngine()
+        # else:
+        return DuckSearchEngine()
 
     async def _execute(self, inputs: List[Any] = [], max_keywords: int = 5, **kwargs):
 
