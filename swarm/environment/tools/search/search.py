@@ -4,6 +4,7 @@
 import os
 from googleapiclient.discovery import build
 import requests
+from ddgs import DDGS
 import ast
 
 class BingSearchEngine():
@@ -57,6 +58,18 @@ class SearchAPIEngine():
                 return '\n'.join([res['snippet'] for res in response['organic_results'][:item_num]])
             return 'Cannot get search results from SearchAPI'
 
+
+class DuckSearchEngine():
+    def __init__(self) -> None:
+        self.ddgs = DDGS()
+    
+    def search(self, query: str, num: int = 3):
+        try:
+            results = self.ddgs.text(query, max_results=num)
+            snippets = [item["body"] for item in results]
+            return "\n".join(snippets)
+        except:
+            return "Cannot get search results from DuckDuckGo"
 
 
 if __name__ == "__main__":

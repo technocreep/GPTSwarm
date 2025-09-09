@@ -28,6 +28,7 @@ beautifulsoup4 = "^4.12.2"
 charset-normalizer = "^3.3.2"
 class-registry = "^2.1.2"
 docx = "^0.2.4"
+ddgs
 fastapi = "0.109.2"
 func-timeout = "^4.3.5"
 google-api-python-client = "^2.111.0"
