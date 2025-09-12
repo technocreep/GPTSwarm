@@ -43,9 +43,10 @@ load_dotenv()
 import aiohttp
 import requests
 from openai import OpenAI, AsyncOpenAI
+import assemblyai as aai
 
 OPENAI_API_KEY=os.getenv("OPENAI_API_KEY")
-
+ASSEMBLYAI_API_KEY = os.getenv("ASSEMBLYAI_API_KEY")
 
 # Refs: https://platform.openai.com/docs/api-reference
 # Refs: https://github.com/Significant-Gravitas/AutoGPT/blob/0e332c0c1221857f3ce96490f073c1c88bcbd367/autogpts/autogpt/autogpt/commands/file_operations_utils.py
@@ -178,15 +179,22 @@ class AudioReader(Reader):
     def parse(file_path: Path) -> str:
         #swarmlog("SYS", f"Transcribing audio file from {file_path}.", Cost.instance().value)
         logger.info(f"Transcribing audio file from {file_path}.")
-        client = OpenAI(api_key=OPENAI_API_KEY)
+        # client = OpenAI(api_key=OPENAI_API_KEY)
         try:
-            client = OpenAI()
-            with open(file_path, "rb") as audio_file:
-                transcript = client.audio.translations.create(
-                    model="whisper-1",
-                    file=audio_file
-                )
+            # client = OpenAI()
+            # with open(file_path, "rb") as audio_file:
+            #     transcript = client.audio.translations.create(
+            #         model="whisper-1",
+            #         file=audio_file
+            #     )
+            # return transcript.text
+        
+        # ASSEMBLYAI_API_KEY = os.getenv("ASSEMBLYAI_API_KEY")
+            aai.settings.api_key = ASSEMBLYAI_API_KEY
+            config = aai.TranscriptionConfig(speech_model=aai.SpeechModel.universal)
+            transcript = aai.Transcriber(config=config).transcribe(file_path)
             return transcript.text
+
         except Exception as e:
             #swarmlog("ERROR", f"Error transcribing audio file: {e}", Cost.instance().value)
             logger.info(f"Error transcribing audio file: {e}")
