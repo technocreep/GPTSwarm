@@ -14,7 +14,17 @@ def cost_count(response, model_name):
     completion_len: int
     price: float
 
-    if "gpt-4" in model_name:
+    if "gpt-4o-mini" in model_name:
+        branch = "gpt-4o-mini"
+        try:
+            prompt_len = response.usage.prompt_tokens
+            completion_len = response.usage.completion_tokens
+        except AttributeError:
+            prompt_len = response["usage"]["prompt_tokens"]
+            completion_len = response["usage"]["completion_tokens"]
+        price = prompt_len * OPENAI_MODEL_INFO[branch][model_name]["input"] /1000 + \
+            completion_len * OPENAI_MODEL_INFO[branch][model_name]["output"] /1000
+    elif "gpt-4" in model_name:
         try:
             branch = "gpt-4"
             prompt_len = response.usage.prompt_tokens
@@ -52,6 +62,21 @@ def cost_count(response, model_name):
     return price, prompt_len, completion_len
 
 OPENAI_MODEL_INFO ={
+    "gpt-4o-mini": {
+        "current_recommended": "gpt-4o-mini-2024-07-18",
+        "gpt-4o-mini": {
+            "context window": 128000,
+            "training": "Jul 2024",
+            "input": 0.0003,
+            "output": 0.0006
+        },
+        "gpt-4o-mini-2024-07-18": {
+            "context window": 128000,
+            "training": "Jul 2024",
+            "input": 0.0003,
+            "output": 0.0006
+        }
+    },
     "gpt-4": {
         "current_recommended": "gpt-4-1106-preview",
         "gpt-4-0125-preview": {
@@ -171,6 +196,3 @@ OPENAI_MODEL_INFO ={
         }
     }
 }
-
-
-
