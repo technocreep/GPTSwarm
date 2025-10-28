@@ -62,6 +62,21 @@ def cost_count(response, model_name):
     return price, prompt_len, completion_len
 
 OPENAI_MODEL_INFO ={
+    "gpt-5-mini": {
+        "current_recommended": "gpt-5-mini-2025-08-07",
+        "gpt-5-mini": {
+            "context window": 400000,
+            "training": "May 2024",
+            "input": 0.25,
+            "output": 2.0
+        },
+        "gpt-5-mini-2025-08-07": {
+            "context window": 400000,
+            "training": "May 2024",
+            "input": 0.25,
+            "output": 2.0
+        }
+    },
     "gpt-4o-mini": {
         "current_recommended": "gpt-4o-mini-2024-07-18",
         "gpt-4o-mini": {
